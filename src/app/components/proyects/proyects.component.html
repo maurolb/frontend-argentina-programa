@@ -1,0 +1,143 @@
+<div
+  class="row"
+  style="
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  "
+  id="proyects"
+>
+  <div>
+    <div class="h1">Proyectos</div>
+
+    <div *ngIf="editMode; then editModeOn; else editModeOff"></div>
+    <ng-template #editModeOn>
+      <div *ngIf="addMode; then addModeOn; else addModeOff"></div>
+      <ng-template #addModeOn>
+        <div>
+          <input type="file" class="mt-2" />
+          <input
+            type="text"
+            class="form-control mt-2"
+            id="title"
+            placeholder="Título"
+            [(ngModel)]="newProject.title"
+          />
+          <input
+            type="text"
+            class="form-control mt-2"
+            id="description"
+            placeholder="Descripción"
+            [(ngModel)]="newProject.description"
+          />
+          <input
+            type="text"
+            class="form-control mt-2"
+            id="demoUrl"
+            placeholder="URL DEMO"
+            [(ngModel)]="newProject.demoUrl"
+          />
+          <input
+            type="text"
+            class="form-control mt-2"
+            id="repoUrl"
+            placeholder="URL REPO"
+            [(ngModel)]="newProject.repoUrl"
+          />
+          <div class="mt-3">
+            <button
+              class="btn btn-outline-success me-3"
+              (click)="saveProject()"
+            >
+              agregar
+            </button>
+            <button class="btn btn-outline-danger" (click)="addModeToggle()">
+              cancelar
+            </button>
+          </div>
+        </div>
+      </ng-template>
+      <ng-template #addModeOff>
+        <div *ngFor="let projectName of projects">
+          <div class="d-flex gap-3 mt-3 mb-3">
+            <h5>{{ projectName?.title }}</h5>
+            <button
+              type="button"
+              class="btn"
+              (click)="deleteProject(projectName.id)"
+            >
+              <i class="fa-regular fa-trash-can fa-sm"></i>
+            </button>
+          </div>
+        </div>
+        <div class="d-flex gap-3">
+          <button class="btn btn-outline-success" (click)="addModeToggle()">
+            Agregar nuevo
+          </button>
+          <button class="btn btn-outline-danger" (click)="editModeToggle()">
+            Volver
+          </button>
+        </div>
+      </ng-template>
+    </ng-template>
+    <ng-template #editModeOff>
+      <div id="projectsCarousel" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-indicators">
+          <button
+            type="button"
+            *ngFor="let indicator of projects; let i = index"
+            [attr.data-bs-target]="'#projectsCarousel'"
+            [attr.data-bs-slide-to]="i"
+            [class.active]="i === 0"
+          ></button>
+        </div>
+        <div class="carousel-inner">
+          <div
+            class="carousel-item"
+            *ngFor="let project of projects; let i = index"
+            [class.active]="i === 0"
+          >
+            <!-- src="https://placehold.co/600x400" -->
+            <img
+              [src]="project?.projectImg"
+              class="d-block w-100"
+              style="height: 70vh; object-fit: fill"
+              alt="project{{ i + 1 }}"
+            />
+            <div class="carousel-caption d-none d-md-block">
+              <h5>{{ project?.title }}</h5>
+              <p>{{ project?.description }}</p>
+            </div>
+          </div>
+        </div>
+        <button
+          class="carousel-control-prev"
+          type="button"
+          data-bs-target="#projectsCarousel"
+          data-bs-slide="prev"
+        >
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button
+          class="carousel-control-next"
+          type="button"
+          data-bs-target="#projectsCarousel"
+          data-bs-slide="next"
+        >
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+      </div>
+      <button
+        type="button"
+        class="btn float-end"
+        *ngIf="authService.loggedIn()"
+        (click)="editModeToggle()"
+      >
+        <i class="fa-solid fa-pen-to-square fa-sm"></i>
+      </button>
+    </ng-template>
+  </div>
+</div>

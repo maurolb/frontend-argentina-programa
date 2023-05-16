@@ -1,0 +1,87 @@
+<div *ngIf="addMode; then addModeOn; else addModeOff"></div>
+<ng-template #addModeOn>
+  <div>
+    <div class="mb-3">
+      <label for="icon" class="form-label">Icono</label>
+      <input
+        type="text"
+        class="form-control"
+        id="icon"
+        placeholder="fa-brands fa-html5 fa-sm"
+        [(ngModel)]="newAbility.icon"
+      />
+    </div>
+    <div class="mb-3">
+      <label for="name" class="form-label">Nombre</label>
+      <input
+        type="text"
+        class="form-control"
+        id="name"
+        placeholder="React, Java, etc"
+        [(ngModel)]="newAbility.name"
+      />
+    </div>
+    <div class="mb-3">
+      <label for="progress" class="form-label d-block">Nivel</label>
+      <div class="d-flex">
+        <input
+          type="range"
+          min="0"
+          max="100"
+          step="1"
+          [(ngModel)]="newAbility.progress"
+        />
+        <span class="ms-3">{{ newAbility.progress }} %</span>
+      </div>
+    </div>
+    <button class="btn btn-outline-success mt-2" (click)="addOne()">
+      Guardar
+    </button>
+    <button class="btn btn-outline-danger mt-2 ms-1" (click)="addModeToggle()">
+      Cancelar
+    </button>
+  </div>
+</ng-template>
+<ng-template #addModeOff>
+  <div class="mt-3" *ngFor="let ability of abilities">
+    <div class="d-flex align-items-center justify-content-between">
+      <div style="font-size: 2rem">
+        <i class="{{ ability?.icon }}"></i>
+      </div>
+      <div>{{ ability?.name }}</div>
+      <div>
+        <!-- <button type="button" class="btn" (click)="updateOne(ability)">
+          <i class="fa-solid fa-pen-to-square fa-sm"></i>
+        </button> -->
+        <button
+          type="button"
+          class="btn"
+          *ngIf="authService.loggedIn()"
+          (click)="removeOne(ability)"
+        >
+          <i class="fa-regular fa-trash-can fa-sm"></i>
+        </button>
+      </div>
+    </div>
+    <div
+      class="progress"
+      role="progressbar"
+      aria-label="Success example"
+      aria-valuenow=""
+      aria-valuemin="0"
+      aria-valuemax="100"
+    >
+      <div
+        class="progress-bar bg-{{ color }}"
+        [style.width]="ability?.progress + '%'"
+      ></div>
+    </div>
+  </div>
+  <button
+    class="btn btn-outline-success mt-5"
+    *ngIf="authService.loggedIn()"
+    (click)="addModeToggle()"
+  >
+    Nuevo
+  </button>
+</ng-template>

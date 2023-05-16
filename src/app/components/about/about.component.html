@@ -1,0 +1,89 @@
+<div
+  class="row"
+  style="
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  "
+  id="about"
+>
+  <div>
+    <div class="btn-container">
+      <div class="h1">Sobre mí</div>
+      <div *ngIf="editMode; then editModeOn; else editModeOff"></div>
+      <ng-template #editModeOn>
+        <div>
+          <textarea
+            class="form-control mt-2"
+            style="resize: none; width: 100%; box-sizing: border-box"
+            id="description"
+            rows="5"
+            [(ngModel)]="about.description"
+            >{{ about?.description }}</textarea
+          >
+          <button class="btn btn-outline-success mt-2" (click)="save()">
+            Guardar
+          </button>
+          <button
+            class="btn btn-outline-danger mt-2 ms-1"
+            (click)="editModeToggle()"
+          >
+            Cancelar
+          </button>
+        </div>
+      </ng-template>
+      <ng-template #editModeOff>
+        <div>
+          <p class="mt-2">{{ about?.description }}</p>
+        </div>
+        <div class="btn-top-right">
+          <button
+            type="button"
+            class="btn"
+            *ngIf="authService.loggedIn()"
+            (click)="editModeToggle()"
+          >
+            <i class="fa-solid fa-pen-to-square fa-sm"></i>
+          </button>
+        </div>
+      </ng-template>
+    </div>
+
+    <div class="row">
+      <div class="h5 text-center mt-5 mb-5">Mis habilidades</div>
+      <div class="col-4 pe-5">
+        <h5>Front-End</h5>
+        <app-hability
+          [abilities]="abilitiesFront"
+          [type]="'front'"
+          [color]="'warning'"
+          (remove)="removeAbility($event)"
+          (add)="addAbility($event)"
+        ></app-hability>
+      </div>
+
+      <div class="col-4 pe-5">
+        <h5>Back-End</h5>
+        <app-hability
+          [abilities]="abilitiesBack"
+          [type]="'back'"
+          [color]="'success'"
+          (remove)="removeAbility($event)"
+          (add)="addAbility($event)"
+        ></app-hability>
+      </div>
+
+      <div class="col-4 pe-5">
+        <h5>Habilidades blandas</h5>
+        <app-hability
+          [abilities]="abilitiesSoft"
+          [type]="'soft'"
+          [color]="'info'"
+          (remove)="removeAbility($event)"
+          (add)="addAbility($event)"
+        ></app-hability>
+      </div>
+    </div>
+  </div>
+</div>

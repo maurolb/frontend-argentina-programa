@@ -1,0 +1,21 @@
+<nav class="navbar navbar-expand-md bg-body-tertiary fixed-top">
+  <div class="container">
+    <a class="navbar-brand" href="#home">Mauro Britez</a>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+      <div class="navbar-nav ms-auto">
+        <button
+          class="btn btn-outline-danger btn-sm"
+          (click)="authService.logout()"
+          *ngIf="authService.loggedIn()"
+        >
+          <i class="fa-solid fa-right-from-bracket fa-sm"></i>
+          Logout
+        </button>
+        <a class="nav-link" href="#home">Inicio</a>
+        <a class="nav-link" href="#about">Sobre mi</a>
+        <a class="nav-link" href="#proyects">Proyectos</a>
+        <a class="nav-link" href="#contact">Contacto</a>
+      </div>
+    </div>
+  </div>
+</nav>

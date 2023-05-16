@@ -1,0 +1,19 @@
+body {
+  padding-top: 55px;
+}
+
+/* boton editar arriba a la derecha */
+.btn-container {
+  position: relative;
+}
+.btn-top-right {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+/* boton editar imagen */
+.btn-center {
+  position: absolute;
+  top: -18%;
+}
